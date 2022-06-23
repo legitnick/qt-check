@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>TextEditor[*]</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTableView" name="tableView"/>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="textEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>&amp;Файл</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="action"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>Помощь</string>
+    </property>
+    <widget class="QMenu" name="menu_5">
+     <property name="title">
+      <string>О программе</string>
+     </property>
+     <addaction name="actionThis_is_a_random_copied_UI"/>
+    </widget>
+    <addaction name="menu_5"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_3"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/new.png</normaloff>:/icons/images/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>Создать</string>
+   </property>
+   <property name="toolTip">
+    <string>New Document</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>Закрыть</string>
+   </property>
+   <property name="toolTip">
+    <string>Закрыть текущее окно</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+   <property name="toolTip">
+    <string>Завершить работу</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+X</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSelectFont">
+   <property name="text">
+    <string>Выбрать шрифт...</string>
+   </property>
+   <property name="toolTip">
+    <string>Выбор шрифта текста</string>
+   </property>
+  </action>
+  <action name="separator">
+   <property name="text">
+    <string>О Qt</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/cut.png</normaloff>:/icons/images/cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Вырезать</string>
+   </property>
+   <property name="toolTip">
+    <string>Вырезать</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/copy.png</normaloff>:/icons/images/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Копировать</string>
+   </property>
+   <property name="toolTip">
+    <string>Копировать</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/paste.png</normaloff>:/icons/images/paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>Вставить</string>
+   </property>
+   <property name="toolTip">
+    <string>Вставить</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/editundo.png</normaloff>:/icons/images/editundo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Отменить</string>
+   </property>
+   <property name="toolTip">
+    <string>Отмена последнего действия </string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/editredo.png</normaloff>:/icons/images/editredo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Повторить</string>
+   </property>
+   <property name="toolTip">
+    <string>Повтор последнего действия</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/open.png</normaloff>:/icons/images/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Document</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/save.png</normaloff>:/icons/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить...</string>
+   </property>
+   <property name="toolTip">
+    <string>Сохранить документ</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="text">
+    <string>Сохранить как...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save as</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionThis_is_a_random_copied_UI">
+   <property name="text">
+    <string>This is a random copied UI</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
