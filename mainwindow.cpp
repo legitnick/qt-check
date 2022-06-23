@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
 
+    _read("_visible_");
+    _display();
 }
 
 MainWindow::~MainWindow()
@@ -24,7 +26,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::newFile(){
     currFile = "new Document";
-    //set an app's state to initial state
+    //set an app to its initial state
 }
 void MainWindow::load(){
     QString fileName = QFileDialog::getOpenFileName(this,"Open");
@@ -34,8 +36,6 @@ void MainWindow::load(){
             return;
         }
 
-    _read(fileName);
-    _display();
 
     currFile = fileName;
     setWindowTitle(currFile);
@@ -104,6 +104,7 @@ void MainWindow::setupTable(QStandardItemModel* itemModel){
             ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
             ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
             ui->tableView->setSortingEnabled(true);
+            ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 void MainWindow::_display(){
     //QTableView* tableView=setupTable();
