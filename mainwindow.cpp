@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSaveAs, &QAction::triggered, this, &MainWindow::saveAs);
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
-
+    itemModel = new TableModel();
+    connect(this,&MainWindow::addData,itemModel,&TableModel::_split);
     _read("_visible_");
     _display();
 }
@@ -25,7 +26,6 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::newFile(){
-    currFile = "new Document";
     //set an app to its initial state
 }
 void MainWindow::load(){
@@ -37,11 +37,8 @@ void MainWindow::load(){
         }
 
 
-    currFile = fileName;
-    setWindowTitle(currFile);
     QTextStream in(&file);
     QString txt = in.readAll();
-    ui->textEdit->setText(txt);
 
 
 
@@ -62,29 +59,7 @@ void MainWindow::saveAs(){
 
     file.close();
 }
-Entrie MainWindow::strToEntrie(QString& strEntrie){
-    QStringList strArr = strEntrie.split(',');
-    if(strArr.size()<5){QMessageBox::warning(this,"Warning",strEntrie);return Entrie();}
-    Entrie a;
-    a.id = strArr[0];
-    a.name = strArr[1];
-    Color cl;
-    cl.r = strArr[2];
-    cl.g = strArr[3];
-    cl.b = strArr[4];
-    a.cl = cl;
 
-    return a;
-}
-void MainWindow::_split(QString DMCdata){
-    QString curr[5];
-    //OK, this killer feature(split) is much better
-    QStringList splitData=DMCdata.split("\n");
-    for(int i=0;i<splitData.size();i++){
-
-                elems.push_back(strToEntrie(splitData[i]));
-    }
-}
 void MainWindow::_read(QString path){
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
@@ -93,9 +68,9 @@ void MainWindow::_read(QString path){
         }
     QTextStream in(&file);
     QString DMCdata = in.readAll();
-    _split(DMCdata);//so, we've read the file and now have a vector with entries for a table.
+    addData(DMCdata);//so, we've read the file and now have a vector with entries for a table.
 }
-void MainWindow::setupTable(QStandardItemModel* itemModel){
+void MainWindow::setupTable(TableModel* itemModel){
 
     ui->tableView->setModel(itemModel);
             ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -106,15 +81,4 @@ void MainWindow::setupTable(QStandardItemModel* itemModel){
             ui->tableView->setSortingEnabled(true);
             ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
-void MainWindow::_display(){
-    //QTableView* tableView=setupTable();
-    itemModel = new QStandardItemModel(elems.size()/3-1,3,this);
-     setupTable(itemModel);
-     for(int i = 0;i*3<elems.size()-1;i++){
-         for(int j = 0;j<3;j++){
-             QModelIndex index = itemModel->index(i,j,QModelIndex());
-             const QVariant& a = (!j)?elems[i].id:j==1?elems[i].name:elems[i].cl.getString();
-             itemModel->setData(index,a);
-         }
-}
-}
+

@@ -6,23 +6,15 @@
 #include <QVector>
 #include <QFile>
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QPushButton>
 #include <QTextStream>
 #include <QTableView>
 #include <QAbstractTableModel>
 #include <QItemDelegate>
 #include <QStandardItemModel>
+#include <QAbstractItemModel>
 
-struct Color{
-    QString r,g,b; //not really efficient, but this will work easily for sure
-    QString getString();
-};
-struct Entrie{
-    Color cl;
-    QString name;
-    QString id;//thought it would be uint, but there is no consistency apparently
-};
+#include "tablemodel.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -38,34 +30,20 @@ slots:
     void load();
     void newFile();
 
-    /*
-    void print();
-    void about();
-    void paste();
-    void cut();
-    void copy();
-    void open();
-    void saveAs();
-    void save();
-
-*/
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+signals:
+void addData(QString line);
 private:
     //so, we need: read a file to know which file to  read next
     //2) read that file and a file with all the DMC colors
     //3) display 'em
 
     void _read(QString path);
-    void setupTable(QStandardItemModel* itemModel);
+    void setupTable(TableModel* itemModel);
     void _display();
-    void _split(QString DMCdata);
-    Entrie strToEntrie(QString& strArr);
     Ui::MainWindow *ui;
-    QString currFile;
-    QVector<Entrie> elems;
-    QStandardItemModel *itemModel;
+    TableModel *itemModel;
 };
 #endif // MAINWINDOW_H
