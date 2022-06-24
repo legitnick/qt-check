@@ -31,9 +31,12 @@ class WidgetTable : public QTableWidget
 
     Entrie strToEntrie(QString& strArr);
 private slots:
+    void doubleClicked(QTableWidgetItem* item);
     void colorize(QTableWidgetItem *item);
+    void _write();
 public:
     explicit WidgetTable( );
+    ~WidgetTable();
 };
 
 #endif // WIDGETTABLE_H

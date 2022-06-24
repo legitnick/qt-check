@@ -22,6 +22,7 @@ void WidgetTable::colorize(QTableWidgetItem *item){
 }
 void WidgetTable::setupWidgetTable(){
     connect(this,&QTableWidget::itemChanged,this,&WidgetTable::colorize);
+    connect(this,&QTableWidget::itemDoubleClicked,this,&WidgetTable::doubleClicked);
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->horizontalHeader()->setStretchLastSection(true);
     this->verticalHeader()->hide();
@@ -88,7 +89,11 @@ void WidgetTable::fillWidgetTable(){
         }
     }
 }
-
+void WidgetTable::doubleClicked(QTableWidgetItem* item){
+    int i = item->row();
+    checkStates[i] = !checkStates[i];//toggle model
+    this->itemAt(i,4)->setCheckState(checkStates[i]?Qt::Checked:Qt::Unchecked);//set according view
+}
 Entrie WidgetTable::strToEntrie(QString& strEntrie){
     QStringList strArr = strEntrie.split(',');
     if(strArr.size()<5){QMessageBox::warning(this,"Warning",strEntrie);return Entrie();}
@@ -104,8 +109,6 @@ Entrie WidgetTable::strToEntrie(QString& strEntrie){
     return a;
 }
 void WidgetTable::_split(QString DMCdata){
-    QString curr[5];
-    //OK, this killer feature(split) is much better
     QStringList splitData=DMCdata.split("\n");
     for(int i=0;i<splitData.size();i++){
 
@@ -122,4 +125,20 @@ void WidgetTable::_read(QString path){
     QTextStream in(&file);
     QString DMCdata = in.readAll();
     _split(DMCdata);//so, we've read the file and now have a vector with entries for a table.
+    file.close();
+}
+void WidgetTable::_write(){
+    QFile file("check");
+    if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
+            QMessageBox::warning(this, "Warning", "Cannot open file: check"+ file.errorString());
+            return;
+        }
+    file.resize(0);
+    QTextStream out(&file);
+    for(bool el:checkStates)
+        out<<(int)el;
+    file.close();
+}
+WidgetTable::~WidgetTable(){
+    _write();
 }
