@@ -26,9 +26,6 @@ class MainWindow : public QMainWindow
 public
 slots:
     //void about();
-    void saveAs();
-    void load();
-    void newFile();
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -41,8 +38,7 @@ private:
     //3) display 'em
 
     void _read(QString path);
-    void setupTable(TableModel* itemModel);
-    void _display();
+    void setupTable();
     Ui::MainWindow *ui;
     TableModel *itemModel;
 };

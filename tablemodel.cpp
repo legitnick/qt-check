@@ -1,4 +1,7 @@
 #include "tablemodel.h"
+QString Color::getString(){
+    return '('+r+','+g+','+b+')';
+}
 Entrie TableModel::strToEntrie(QString& strEntrie){
     QStringList strArr = strEntrie.split(',');
     if(strArr.size()<5){return Entrie();}
@@ -21,7 +24,6 @@ TableModel::TableModel(QObject *parent,QVector<Entrie>* elems)
 }
 
 void TableModel::_split(QString DMCdata){
-    QString curr[5];
     //OK, this killer feature(split) is much better
     QStringList splitData=DMCdata.split("\n");
     for(int i=0;i<splitData.size();i++){
