@@ -17,13 +17,41 @@ MainWindow::MainWindow(QWidget *parent)
 
     _read("_visible_");
     _display();
+    fillWidgetTable();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::setupWidgetTable(){
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+    ui->tableWidget->verticalHeader()->hide();
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableWidget->setSortingEnabled(true);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+}
+void MainWindow::fillWidgetTable(){
+    setupWidgetTable();
+    ui->tableWidget->setColumnCount(4);
+    ui->tableWidget->setRowCount(elems.size()/3);
+    for(int i = 0;i<ui->tableWidget->rowCount();i++){
+        for(int j = 0;j<ui->tableWidget->columnCount();j++){
+            if(j!=ui->tableWidget->columnCount()-1){
+                const QString& a = (!j)?elems[i].id:j==1?elems[i].name:elems[i].cl.getString();
+                QTableWidgetItem* item = new QTableWidgetItem(a);
 
+                ui->tableWidget->setItem(i,j,item);
+            }else{
+                QTableWidgetItem* item = new QTableWidgetItem();
+                item->setCheckState(Qt::Checked);
+                ui->tableWidget->setItem(i,j,item);
+            }
+        }
+    }
+}
 void MainWindow::newFile(){
     currFile = "new Document";
     //set an app to its initial state
@@ -41,7 +69,6 @@ void MainWindow::load(){
     setWindowTitle(currFile);
     QTextStream in(&file);
     QString txt = in.readAll();
-    ui->textEdit->setText(txt);
 
 
 
@@ -97,7 +124,7 @@ void MainWindow::_read(QString path){
 }
 void MainWindow::setupTable(QStandardItemModel* itemModel){
 
-    ui->tableView->setModel(itemModel);
+            ui->tableView->setModel(itemModel);
             ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
             ui->tableView->horizontalHeader()->setStretchLastSection(true);
             ui->tableView->verticalHeader()->hide();

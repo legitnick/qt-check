@@ -38,17 +38,6 @@ slots:
     void load();
     void newFile();
 
-    /*
-    void print();
-    void about();
-    void paste();
-    void cut();
-    void copy();
-    void open();
-    void saveAs();
-    void save();
-
-*/
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -57,11 +46,12 @@ private:
     //so, we need: read a file to know which file to  read next
     //2) read that file and a file with all the DMC colors
     //3) display 'em
-
+    void fillWidgetTable();
     void _read(QString path);
     void setupTable(QStandardItemModel* itemModel);
     void _display();
     void _split(QString DMCdata);
+    void setupWidgetTable();
     Entrie strToEntrie(QString& strArr);
     Ui::MainWindow *ui;
     QString currFile;
