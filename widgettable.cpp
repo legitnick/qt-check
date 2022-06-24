@@ -11,8 +11,17 @@ WidgetTable::WidgetTable( )
 QString Color::getString(){
     return '('+r+','+g+','+b+')';
 }
+void WidgetTable::colorize(QTableWidgetItem *item){
+    int i = item->row();
+    uint r = elems[i].cl.r.toUInt();
+    uint g = elems[i].cl.g.toUInt();
+    uint b = elems[i].cl.b.toUInt();
+    QColor color(r,g,b);
+    item->setBackground(color);
+    if(int j = item->column())colorize(this->item(i,j-1));//recursion to colorize row
+}
 void WidgetTable::setupWidgetTable(){
-
+    connect(this,&QTableWidget::itemChanged,this,&WidgetTable::colorize);
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->horizontalHeader()->setStretchLastSection(true);
     this->verticalHeader()->hide();
@@ -21,21 +30,25 @@ void WidgetTable::setupWidgetTable(){
     this->setSortingEnabled(true);
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setStyleSheet(
-                                           "background-color: #2F2F2F;"
-                                           "border: 1px solid #4181C0;"
-                                           "color: #4181C0;"
-                                           "selection-background-color: #4181C0;"
-                                           "selection-color: #FFF;"
-
+     this->setStyleSheet(
+                                           "border: 1px solid #000000;"
                                            "QHeaderView::section {"
                                            "border-top: 0px solid 4181C0;"
                                            "border-bottom: 1px solid 4181C0;"
                                            "border-right: 1px solid 4181C0;"
-                                           "background:#2F2F2F;"
+                                           "background:#3A3A2F;"
                                            "color: #4181C0;"
                                            "}"
+
+    /*                                       "background-color: #2F2F2F;"
+                                           "color: #4181C0;"
+                                           "selection-background-color: #4181C0;"
+                                           "selection-color: #FFF;"
+                                   try without stylesheet for debug
+
+    */
                        );
+
 }
 void WidgetTable::initCheckStates(){
     QFile file("check");
@@ -71,6 +84,7 @@ void WidgetTable::fillWidgetTable(){
 
             item->setTextAlignment(Qt::AlignHCenter);
             this->setItem(i,j,item);
+
         }
     }
 }

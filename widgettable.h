@@ -28,7 +28,10 @@ class WidgetTable : public QTableWidget
     void _split(QString DMCdata);
     void setupWidgetTable();
     void initCheckStates();
+
     Entrie strToEntrie(QString& strArr);
+private slots:
+    void colorize(QTableWidgetItem *item);
 public:
     explicit WidgetTable( );
 };
