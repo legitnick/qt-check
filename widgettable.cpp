@@ -20,6 +20,16 @@ void WidgetTable::colorize(QTableWidgetItem *item){
     item->setBackground(color);
     if(int j = item->column())colorize(this->item(i,j-1));//recursion to colorize row
 }
+void WidgetTable::doubleClicked(QTableWidgetItem* item){
+    int i = item->row();
+    checkStates[i] = !checkStates[i];//toggle model
+    this->item(i,this->columnCount()-1)->setCheckState(checkStates[i]?Qt::Checked:Qt::Unchecked);
+
+    //this line does not work as this->itemAt(i,3) is not found...
+    //will try recursion once again
+
+    //this->itemAt(i,3)->setCheckState(checkStates[i]?Qt::Checked:Qt::Unchecked);//set according view
+}
 void WidgetTable::setupWidgetTable(){
     connect(this,&QTableWidget::itemChanged,this,&WidgetTable::colorize);
     connect(this,&QTableWidget::itemDoubleClicked,this,&WidgetTable::doubleClicked);
@@ -53,7 +63,8 @@ void WidgetTable::setupWidgetTable(){
 }
 void WidgetTable::initCheckStates(){
     QFile file("check");
-    if(file.size()<64)checkStates = QVector<bool>(this->rowCount(),false) ;
+    checkStates = QVector<bool>(this->rowCount(),false) ;
+    if(file.size()<128)return;//the file size is at the very least 151 bytes, so it'll work on the first launch
     if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
             QMessageBox::warning(this, "Warning", "Cannot open file: check "+ file.errorString());
             return;
@@ -80,6 +91,8 @@ void WidgetTable::fillWidgetTable(){
                 const QString& a = (!j)?elems[i].id:j==1?elems[i].name:elems[i].cl.getString();
                 item->setText(a);
             }else{
+                auto currFlags = item->flags();
+                item->setFlags(currFlags&(~Qt::ItemIsUserCheckable));//so hopefully this means users cannot check by checkbox anymore
                 item->setCheckState(checkStates[i]?Qt::Checked:Qt::Unchecked);
             }
 
@@ -89,14 +102,10 @@ void WidgetTable::fillWidgetTable(){
         }
     }
 }
-void WidgetTable::doubleClicked(QTableWidgetItem* item){
-    int i = item->row();
-    checkStates[i] = !checkStates[i];//toggle model
-    this->itemAt(i,4)->setCheckState(checkStates[i]?Qt::Checked:Qt::Unchecked);//set according view
-}
+
 Entrie WidgetTable::strToEntrie(QString& strEntrie){
     QStringList strArr = strEntrie.split(',');
-    if(strArr.size()<5){QMessageBox::warning(this,"Warning",strEntrie);return Entrie();}
+    if(strArr.size()<5){return Entrie();}
     Entrie a;
     a.id = strArr[0];
     a.name = strArr[1];
