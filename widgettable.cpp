@@ -136,7 +136,7 @@ void WidgetTable::_read(QString path){
     _split(DMCdata);//so, we've read the file and now have a vector with entries for a table.
     file.close();
 }
-void WidgetTable::_write(){
+void WidgetTable::_writeFIle(){
     QFile file("check");
     if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
             QMessageBox::warning(this, "Warning", "Cannot open file: check"+ file.errorString());
@@ -149,5 +149,5 @@ void WidgetTable::_write(){
     file.close();
 }
 WidgetTable::~WidgetTable(){
-    _write();
+    _writeFIle();
 }

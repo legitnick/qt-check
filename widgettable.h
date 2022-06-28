@@ -33,7 +33,7 @@ class WidgetTable : public QTableWidget
 private slots:
     void doubleClicked(QTableWidgetItem* item);
     void colorize(QTableWidgetItem *item);
-    void _write();
+    void _writeFIle();
 public:
     explicit WidgetTable( );
     ~WidgetTable();

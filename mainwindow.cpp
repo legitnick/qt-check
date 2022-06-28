@@ -8,6 +8,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     table = new WidgetTable();
     setCentralWidget(table);
+    if (!QDir::setCurrent(QCoreApplication::applicationDirPath())) {
+      // Enters here if assets are not loaded?
+        QMessageBox::warning(this,"Initializatoin error","The assets are not loaded correctly");
+
+    }
 
 }
 
