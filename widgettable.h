@@ -9,8 +9,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include <algorithm>//for min only
-
 struct Color{
     QString r,g,b; //not really efficient, but this will work easily for sure
     QString getString();
@@ -28,6 +26,7 @@ private slots:
     void colorize(QTableWidgetItem *item);
     void selected(QTableWidgetItem *item);
 private:
+    QTableWidgetItem* selectedItem=nullptr;
     QVector<Entrie> elems;
     QVector<bool> checkStates;
     void fillWidgetTable();

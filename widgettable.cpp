@@ -12,8 +12,20 @@ QString Color::getString(){
     return '('+r+','+g+','+b+')';
 }
 void WidgetTable::selected(QTableWidgetItem* item){
-    //resolve two problems: one of changing color only to the left, second of leaving all the changed colors behind.
+    //resolve two problems: one of changing color only to the left, second of leaving all the changed colors behind.by having
     int i = item->row();
+    int cols = this->columnCount()-1;
+    if(!selectedItem){
+
+        selectedItem = this->item(i,cols);
+        selected(selectedItem);
+    }
+
+    if(selectedItem->row()!=i) {
+        colorize(selectedItem);//unselect prev
+        selectedItem = this->item(i,cols);
+        selected(selectedItem);
+    }
     uint r = elems[i].cl.r.toUInt();
     uint g = elems[i].cl.g.toUInt();
     uint b = elems[i].cl.b.toUInt();
@@ -24,13 +36,15 @@ void WidgetTable::selected(QTableWidgetItem* item){
         b+=a;
     }
 
-    if(r+g+b<255/2){
-        QColor color(5,5,5);
-        item->setForeground(color);
-    }
     QColor color(r,g,b);
     item->setBackground(color);
-    if(int j = item->column())selected(this->item(i,j-1));//recursion to colorize row
+    if(cols!=item->column()){
+        //don't want to change checkbox color
+        color = QColor(250,250,250);
+        item->setForeground(color);
+    }
+    if(int j = item->column())selected(this->item(i,j-1));
+
 }
 void WidgetTable::colorize(QTableWidgetItem *item){
     int i = item->row();
@@ -40,7 +54,9 @@ void WidgetTable::colorize(QTableWidgetItem *item){
     QColor color(r,g,b);
     item->setBackground(color);
 
-    //if(int j = item->column())colorize(this->item(i,j-1));//recursion to colorize row
+    color = QColor(2,2,2);
+    item->setForeground(color);
+    if(int j = item->column())colorize(this->item(i,j-1));
 }
 void WidgetTable::doubleClicked(QTableWidgetItem* item){
     int i = item->row();
