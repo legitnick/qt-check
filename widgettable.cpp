@@ -11,6 +11,27 @@ WidgetTable::WidgetTable( )
 QString Color::getString(){
     return '('+r+','+g+','+b+')';
 }
+void WidgetTable::selected(QTableWidgetItem* item){
+    //resolve two problems: one of changing color only to the left, second of leaving all the changed colors behind.
+    int i = item->row();
+    uint r = elems[i].cl.r.toUInt();
+    uint g = elems[i].cl.g.toUInt();
+    uint b = elems[i].cl.b.toUInt();
+    uint a = 10;
+    if(r+a<255&&g+a<255&&b+a<255){
+        r+=a;
+        g+=a;
+        b+=a;
+    }
+
+    if(r+g+b<255/2){
+        QColor color(5,5,5);
+        item->setForeground(color);
+    }
+    QColor color(r,g,b);
+    item->setBackground(color);
+    if(int j = item->column())selected(this->item(i,j-1));//recursion to colorize row
+}
 void WidgetTable::colorize(QTableWidgetItem *item){
     int i = item->row();
     uint r = elems[i].cl.r.toUInt();
@@ -18,43 +39,47 @@ void WidgetTable::colorize(QTableWidgetItem *item){
     uint b = elems[i].cl.b.toUInt();
     QColor color(r,g,b);
     item->setBackground(color);
-    if(int j = item->column())colorize(this->item(i,j-1));//recursion to colorize row
+
+    //if(int j = item->column())colorize(this->item(i,j-1));//recursion to colorize row
 }
 void WidgetTable::doubleClicked(QTableWidgetItem* item){
     int i = item->row();
     checkStates[i] = !checkStates[i];//toggle model
     this->item(i,this->columnCount()-1)->setCheckState(checkStates[i]?Qt::Checked:Qt::Unchecked);
-
-    //this line does not work as this->itemAt(i,3) is not found...
-    //will try recursion once again
-
-    //this->itemAt(i,3)->setCheckState(checkStates[i]?Qt::Checked:Qt::Unchecked);//set according view
 }
 void WidgetTable::setupWidgetTable(){
+
     connect(this,&QTableWidget::itemChanged,this,&WidgetTable::colorize);
+    connect(this,&QTableWidget::itemPressed,this,&WidgetTable::selected);
     connect(this,&QTableWidget::itemDoubleClicked,this,&WidgetTable::doubleClicked);
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->horizontalHeader()->setStretchLastSection(true);
     this->verticalHeader()->hide();
     this->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    this->setSelectionMode(QAbstractItemView::SingleSelection);
+    this->setSelectionMode(QAbstractItemView::NoSelection);
     this->setSortingEnabled(true);
+
+    this->setFocusPolicy(Qt::NoFocus);//will work for now, stylesheet and signal methods didn't
+
+
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
      this->setStyleSheet(
                                            "border: 1px solid #000000;"
+                //make selected row darker, and text brighter
+
                                            "QHeaderView::section {"
                                            "border-top: 0px solid 4181C0;"
                                            "border-bottom: 1px solid 4181C0;"
                                            "border-right: 1px solid 4181C0;"
                                            "background:#3A3A2F;"
                                            "color: #4181C0;"
+
                                            "}"
 
     /*                                       "background-color: #2F2F2F;"
                                            "color: #4181C0;"
-                                           "selection-background-color: #4181C0;"
-                                           "selection-color: #FFF;"
+
                                    try without stylesheet for debug
 
     */
@@ -101,6 +126,8 @@ void WidgetTable::fillWidgetTable(){
 
         }
     }
+
+    disconnect(this,&QTableWidget::itemChanged,this,&WidgetTable::colorize);//I figure changing background probably triggers change sygnal
 }
 
 Entrie WidgetTable::strToEntrie(QString& strEntrie){
