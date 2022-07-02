@@ -9,6 +9,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QScroller>
+
 
 struct Color{
     QString r,g,b; //not really efficient, but this will work easily for sure
@@ -29,10 +31,12 @@ private slots:
 private:
     QTableWidgetItem* selectedItem=nullptr;
     QVector<Entrie> elems;
+    QScroller scroller;
     QVector<bool> checkStates;
     void fillWidgetTable();
     void _read(QString path);
     void _split(QString DMCdata);
+    QScroller* initScroller();
     void setupWidgetTable();
     void initCheckStates();
     void _writeFIle();
@@ -42,18 +46,6 @@ private:
 public:
     explicit WidgetTable( );
     ~WidgetTable();
-};
-
-#endif // WIDGETTABLE_H
-#ifndef WIDGETTABLE_H
-#define WIDGETTABLE_H
-
-#include <QTableWidget>
-
-class WidgetTable : public QTableWidget
-{
-public:
-    WidgetTable();
 };
 
 #endif // WIDGETTABLE_H

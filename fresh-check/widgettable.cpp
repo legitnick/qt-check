@@ -3,10 +3,16 @@
 WidgetTable::WidgetTable( )
     :QTableWidget()
 {
-
-
+    scroller = initScroller();//this looks relatively ugly, but
     _read(":resources/resources/_visible_.txt");
     fillWidgetTable();
+}
+
+QScroller *WidgetTable::initScroller(){
+    QScroller* tmpScroller = QScroller::scroller(this);
+    this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    this->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+    return tmpScroller;
 }
 
 QString Color::getString(){
@@ -86,7 +92,7 @@ void WidgetTable::setupWidgetTable(){
 
 
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
      this->setStyleSheet(
                                            "border: 1px solid #000000;"
                 //make selected row darker, and text brighter
@@ -115,7 +121,7 @@ void WidgetTable::initCheckStates(){
     if(checkString.size()<10)return;//the file size is at the very least 151 bytes, so it'll work on the first launch
     for(int i = 0;i<checkString.size();i++){
         if(checkString[i].toLatin1()-'0')checkStates[i]=true;//toLatin1 is a first function name which does not make too much sense(to me)
-        this->setRowHeight(i,60);
+        this->setRowHeight(i,200);
     }
 }
 void WidgetTable::fillWidgetTable(){
