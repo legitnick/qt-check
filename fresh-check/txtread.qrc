@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>resources/_visible_.txt</file>
+    </qresource>
+</RCC>
