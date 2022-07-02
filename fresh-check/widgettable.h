@@ -9,7 +9,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
-#include <QScroller>
 
 
 struct Color{
@@ -31,12 +30,10 @@ private slots:
 private:
     QTableWidgetItem* selectedItem=nullptr;
     QVector<Entrie> elems;
-    QScroller scroller;
     QVector<bool> checkStates;
     void fillWidgetTable();
     void _read(QString path);
     void _split(QString DMCdata);
-    QScroller* initScroller();
     void setupWidgetTable();
     void initCheckStates();
     void _writeFIle();

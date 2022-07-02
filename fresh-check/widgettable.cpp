@@ -2,18 +2,11 @@
 
 WidgetTable::WidgetTable( )
     :QTableWidget()
-{
-    scroller = initScroller();//this looks relatively ugly, but
+ {
     _read(":resources/resources/_visible_.txt");
     fillWidgetTable();
 }
 
-QScroller *WidgetTable::initScroller(){
-    QScroller* tmpScroller = QScroller::scroller(this);
-    this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    this->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-    return tmpScroller;
-}
 
 QString Color::getString(){
     return '('+r+','+g+','+b+')';
@@ -78,11 +71,13 @@ void WidgetTable::setupWidgetTable(){
     connect(this,&QTableWidget::itemPressed,this,&WidgetTable::selected);
     connect(this,&QTableWidget::itemClicked,this,&WidgetTable::Clicked);
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
-    this->horizontalHeader()->setStretchLastSection(true);
+    //this->horizontalHeader()->setStretchLastSection(true) ;
     this->verticalHeader()->hide();
     this->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->setSelectionMode(QAbstractItemView::NoSelection);
     this->setSortingEnabled(true);
+
+    this->setAutoScroll(true);
 
     this->setColumnWidth(3,20);
     this->setColumnWidth(0,60);
@@ -92,7 +87,9 @@ void WidgetTable::setupWidgetTable(){
 
 
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    //this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
      this->setStyleSheet(
                                            "border: 1px solid #000000;"
                 //make selected row darker, and text brighter
