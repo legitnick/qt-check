@@ -4,7 +4,7 @@ WidgetTable::WidgetTable( )
     :QTableWidget()
 {
 
-    _read("_visible_");
+    _read(":resources/resources/_visible_.txt");
     fillWidgetTable();
 }
 
@@ -103,7 +103,7 @@ void WidgetTable::setupWidgetTable(){
 
 }
 void WidgetTable::initCheckStates(){
-    QFile file("check");
+    QFile file(":resources/resources/check.txt");
     checkStates = QVector<bool>(this->rowCount(),false) ;
     if(file.size()<128)return;//the file size is at the very least 151 bytes, so it'll work on the first launch
     if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
@@ -123,13 +123,15 @@ void WidgetTable::fillWidgetTable(){
     this->setColumnCount(4);
     this->setRowCount(elems.size()/3);
 
+    QStringList headers = {"N","name","color","presence"};
+    this->setHorizontalHeaderLabels(headers);
     initCheckStates();
     for(int i = 0;i<this->rowCount();i++){
         for(int j = 0;j<this->columnCount();j++){
 
             QTableWidgetItem* item = new QTableWidgetItem();
             if(j!=this->columnCount()-1){
-                const QString& a = (!j)?elems[i].id:j==1?elems[i].name:elems[i].cl.getString();
+                const QString& a = (!j)?QString::number(elems[i].id):j==1?elems[i].name:elems[i].cl.getString();
                 item->setText(a);
             }else{
                 auto currFlags = item->flags();
@@ -150,7 +152,7 @@ Entrie WidgetTable::strToEntrie(QString& strEntrie){
     QStringList strArr = strEntrie.split(',');
     if(strArr.size()<5){return Entrie();}
     Entrie a;
-    a.id = strArr[0];
+    a.id = strArr[0].toInt();
     a.name = strArr[1];
     Color cl;
     cl.r = strArr[2];
@@ -170,7 +172,7 @@ void WidgetTable::_split(QString DMCdata){
 void WidgetTable::_read(QString path){
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-            QMessageBox::warning(this, "Warning", "Cannot open file: "+ path+ file.errorString());
+            QMessageBox::warning(this, "Warning", "Cannot read file: "+ path+ file.errorString());
             return;
         }
 
@@ -180,9 +182,9 @@ void WidgetTable::_read(QString path){
     file.close();
 }
 void WidgetTable::_writeFIle(){
-    QFile file("check");
+    QFile file(":resources/resources/check.txt");
     if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
-            QMessageBox::warning(this, "Warning", "Cannot open file: check"+ file.errorString());
+            QMessageBox::warning(this, "Warning", "Cannot write file: check"+ file.errorString());
             return;
         }
     file.resize(0);

@@ -1,6 +1,8 @@
 <RCC>
-    <qresource prefix="/">
-        <file>resources/check</file>
+    <qresource prefix="/resources">
         <file>resources/_visible_</file>
+        <file>resources/check</file>
+        <file>resources/check.txt</file>
+        <file>resources/_visible_.txt</file>
     </qresource>
 </RCC>

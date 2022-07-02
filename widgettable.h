@@ -16,7 +16,7 @@ struct Color{
 struct Entrie{
     Color cl;
     QString name;
-    QString id;//thought it would be uint, but there is no consistency apparently
+    int id;//thought it would be uint, but there is no consistency apparently
 };
 class WidgetTable : public QTableWidget
 {
