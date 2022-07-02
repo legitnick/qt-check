@@ -4,6 +4,7 @@ WidgetTable::WidgetTable( )
     :QTableWidget()
 {
 
+
     _read(":resources/resources/_visible_.txt");
     fillWidgetTable();
 }
@@ -103,20 +104,12 @@ void WidgetTable::setupWidgetTable(){
 
 }
 void WidgetTable::initCheckStates(){
-    QFile file(":resources/resources/check.txt");
+    QString checkString = state.value("res/check").toString();
     checkStates = QVector<bool>(this->rowCount(),false) ;
-    if(file.size()<128)return;//the file size is at the very least 151 bytes, so it'll work on the first launch
-    if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-            QMessageBox::warning(this, "Warning", "Cannot open file: check "+ file.errorString());
-            return;
-        }
-
-    QTextStream in(&file);
-    QString checkString = in.readAll();
+    if(checkString.size()<10)return;//the file size is at the very least 151 bytes, so it'll work on the first launch
     for(int i = 0;i<checkString.size();i++){
         if(checkString[i].toLatin1()-'0')checkStates[i]=true;//toLatin1 is a first function name which does not make too much sense(to me)
     }
-    file.close();
 }
 void WidgetTable::fillWidgetTable(){
     setupWidgetTable();
@@ -182,16 +175,12 @@ void WidgetTable::_read(QString path){
     file.close();
 }
 void WidgetTable::_writeFIle(){
-    QFile file(":resources/resources/check.txt");
-    if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
-            QMessageBox::warning(this, "Warning", "Cannot write file: check"+ file.errorString());
-            return;
-        }
-    file.resize(0);
-    QTextStream out(&file);
-    for(bool el:checkStates)
-        out<<(int)el;
-    file.close();
+    QString checkString;
+    for(int i = 0;i<checkStates.size();i++){
+        if(checkStates[i]){checkString+="1";continue;}//no elses, idk why would you do that honestly)
+        checkString+="0";
+    }
+    state.setValue("res/check",checkString);
 }
 WidgetTable::~WidgetTable(){
     _writeFIle();

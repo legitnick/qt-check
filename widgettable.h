@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
 
 struct Color{
     QString r,g,b; //not really efficient, but this will work easily for sure
@@ -36,6 +37,7 @@ private:
     void initCheckStates();
     void _writeFIle();
     Entrie strToEntrie(QString& strArr);
+    QSettings state;
 
 public:
     explicit WidgetTable( );

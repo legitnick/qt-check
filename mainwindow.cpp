@@ -13,6 +13,10 @@ MainWindow::MainWindow(QWidget *parent)
         QMessageBox::warning(this,"Initializatoin error","The assets are not loaded correctly");
 
     }
+       QCoreApplication::setOrganizationName("MySoft");
+       QCoreApplication::setOrganizationDomain("mysoft.com");
+       QCoreApplication::setApplicationName("Star Runner");
+
 
 }
 
