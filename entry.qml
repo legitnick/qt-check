@@ -4,33 +4,58 @@ import QtQuick.Layouts 1.0
 RowLayout {
     id: layout
     spacing: 6;
-    anchors.fill:parent;
-    Layout.fillWidth: true;
+    width:parent.width;
+    height: 200;
+    Rectangle{
+
+        Layout.fillWidth: true
+        Layout.minimumWidth: 50
+        Layout.preferredWidth: 100
+        Layout.maximumWidth: 300
+        Layout.minimumHeight: 150
     Controls.CheckBox {
-        Layout.fillWidth: true;
         id:chk
+
+        anchors.centerIn: parent;
     }
+    }
+    Rectangle{
+
+        Layout.fillWidth: true
+        Layout.minimumWidth: 50
+        Layout.preferredWidth: 100
+        Layout.maximumWidth: 300
+        Layout.minimumHeight: 150
     Controls.Label{
         text:color
 
-        Layout.fillWidth:true;
-    width:180
-    height:100
-
+        anchors.centerIn: parent;
     }
+    }
+    Rectangle{
+
+        Layout.fillWidth: true
+        Layout.minimumWidth: 50
+        Layout.preferredWidth: 100
+        Layout.maximumWidth: 300
+        Layout.minimumHeight: 150
     Controls.Label{
         text:name
 
-        Layout.fillWidth: true;
-    width:300
-    height:100
+        anchors.centerIn: parent;
     }
+}
+    Rectangle{
+
+        Layout.fillWidth: true
+        Layout.minimumWidth: 50
+        Layout.preferredWidth: 100
+        Layout.maximumWidth: 300
+        Layout.minimumHeight: 150
     Controls.Label{
         text:number
-
-        Layout.fillWidth: true;
-    width:100
-    height:100
+        anchors.centerIn: parent;
+    }
     }
 
 }
