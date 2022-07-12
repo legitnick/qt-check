@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Entry.qml</file>
+    </qresource>
+    <qresource prefix="/list_elems">
+        <file>entry.qml</file>
+    </qresource>
+</RCC>
