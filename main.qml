@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
-import QtQuick.Controls 2.0 as Controlsv
+import QtQuick.Controls 2.0
+
 
     ListView{
         width:900;
