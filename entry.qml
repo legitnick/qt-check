@@ -6,6 +6,7 @@ Rectangle{
     y:10;
     width:parent.width;
     height:100;
+color:red;
     Rectangle{
 
         anchors.centerIn: parent;
@@ -33,7 +34,7 @@ RowLayout {
         id:chk
         indicator.width: 32;
         indicator.height: 32;
-
+        onCheckStateChanged:indexlbl.color = "grey";
 
         anchors.centerIn: parent;
     }
@@ -72,7 +73,8 @@ RowLayout {
         Layout.maximumWidth: 300
         Layout.minimumHeight: 90
     Controls.Label{
-        text:number
+        id:indexlbl
+        text:index;
         anchors.centerIn: parent;
     }
     }

@@ -3,7 +3,10 @@
         <file>main.qml</file>
         <file>Entry.qml</file>
     </qresource>
-    <qresource prefix="/list_elems">
-        <file>entry.qml</file>
+    <qresource prefix="/Backend">
+        <file>ObjectModel.qml</file>
+    </qresource>
+    <qresource prefix="/txt">
+        <file>dmc_open_data</file>
     </qresource>
 </RCC>
