@@ -10,7 +10,7 @@
 int main(int argc, char ** argv)
 {
      QGuiApplication  app (argc, argv);
-
+ObjectModel model;
      qmlRegisterType<ObjectModel>("Backend", 1, 0, "ObjectModel");
 
 

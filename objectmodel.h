@@ -12,7 +12,7 @@
 struct Contact {
     QString N;
     QString name;
-    QString color;
+    QString m_color;
     bool checked;
 };
 class ObjectModel : public QAbstractListModel
@@ -21,20 +21,23 @@ class ObjectModel : public QAbstractListModel
     QML_ELEMENT
 public:
     explicit ObjectModel(QObject *parent = nullptr);
+    ~ObjectModel();
     void append(QString N,QString name,QString color,bool checked);
-    virtual int rowCount() const final;
-    virtual QList<bool> data()const final;
+    QVariant data(const QModelIndex& index, int role)const;
+    int rowCount(const QModelIndex& index)const;
     Q_INVOKABLE void check(int row);
+    Q_INVOKABLE QVariant getColor(int row);
     void populate();
 
 
 private:
-
+    void writeState();
     void readFile(QString file);
     void initCheckStates();
     void _split(QString DMCdata);
     QSettings state;
     QList<Contact> m_contacts;
+    QList <bool> checkList;
 };
 
 #endif // OBJECTMODEL_H

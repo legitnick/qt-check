@@ -6,7 +6,6 @@ Rectangle{
     y:10;
     width:parent.width;
     height:100;
-color:red;
     Rectangle{
 
         anchors.centerIn: parent;
@@ -30,28 +29,13 @@ RowLayout {
         Layout.preferredWidth: 100
         Layout.maximumWidth: 300
         Layout.minimumHeight: 90
-    Controls.CheckBox {
-        id:chk
-        indicator.width: 32;
-        indicator.height: 32;
-        onCheckStateChanged:indexlbl.color = "grey";
-
-        anchors.centerIn: parent;
-    }
-        }
-    Rectangle{
-
-        Layout.fillWidth: true
-        Layout.minimumWidth: 50
-        Layout.preferredWidth: 100
-        Layout.maximumWidth: 300
-        Layout.minimumHeight: 90
     Controls.Label{
-        text:color
-
+        id:indexlbl
+        text:index;
         anchors.centerIn: parent;
     }
     }
+
     Rectangle{
 
         Layout.fillWidth: true
@@ -72,12 +56,31 @@ RowLayout {
         Layout.preferredWidth: 100
         Layout.maximumWidth: 300
         Layout.minimumHeight: 90
-    Controls.Label{
-        id:indexlbl
-        text:index;
+    Rectangle{
+        implicitWidth: 16;
+        implicitHeight: 16;
+        color:main.model.getColor(index)
+
         anchors.centerIn: parent;
     }
     }
+
+    Rectangle{
+
+        Layout.fillWidth: true
+        Layout.minimumWidth: 50
+        Layout.preferredWidth: 100
+        Layout.maximumWidth: 300
+        Layout.minimumHeight: 90
+    Controls.CheckBox {
+        id:chk
+        indicator.width: 32;
+        indicator.height: 32;
+        onCheckStateChanged:indexlbl.color = "grey";
+
+        anchors.centerIn: parent;
+    }
+        }
 }
 }
 }
