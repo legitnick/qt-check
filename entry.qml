@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.0
 
 Rectangle{
     y:10;
-    width:parent.width;
+    width:100;
     height:100;
     Rectangle{
 
@@ -31,7 +31,7 @@ RowLayout {
         Layout.minimumHeight: 90
     Controls.Label{
         id:indexlbl
-        text:index;
+        text:main.model.getN(index);
         anchors.centerIn: parent;
     }
     }
@@ -44,7 +44,7 @@ RowLayout {
         Layout.maximumWidth: 300
         Layout.minimumHeight: 90
     Controls.Label{
-        text:name
+        text:main.model.getName(index);
 
         anchors.centerIn: parent;
     }
@@ -76,11 +76,12 @@ RowLayout {
         id:chk
         indicator.width: 32;
         indicator.height: 32;
-        onCheckStateChanged:indexlbl.color = "grey";
+        checkState: main.model.getCheck(index);
+        onCheckStateChanged:main.model.check(index);
 
         anchors.centerIn: parent;
     }
-        }
+   }
 }
 }
 }

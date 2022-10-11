@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 ListModel {
 
-    Component.onCompleted:console.log("hi");
+   // Component.onCompleted:console.log("hi");
     ListElement {
        N:"1"
        color: "Knoxville"
